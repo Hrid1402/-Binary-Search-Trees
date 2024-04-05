@@ -65,13 +65,54 @@ class Tree{
             this.prettyPrint(node.left, `${prefix}${isLeft ? "    " : "│   "}`, true);
         }
     };
-    //TODO 
+    //TODO dont work with value that already exists;
     insert(value){
-
+        let actualNode = this.root;
+        while(true){
+            if (value < actualNode.data){
+                if(actualNode.left == null){
+                    actualNode.left = new Node(value, null, null);
+                    break
+                }
+                actualNode = actualNode.left;
+                
+            }
+            else{
+                if(actualNode.right == null){
+                    actualNode.right = new Node(value, null, null);
+                    break
+                }
+                actualNode = actualNode.right;
+                
+            }
+            
+        }
     }
     //TODO
     deleteItem(value){
-
+        let actualNode = this.root;
+        let previousNode = null;
+        while(true){
+            if(actualNode.data == value){
+                if(actualNode.left == null && actualNode.right == null){
+                    console.log(actualNode);
+                    console.log("p", previousNode.data);
+                    break;
+                }
+            }
+            else{
+                if(value < actualNode.data){
+                    previousNode = actualNode;
+                    actualNode = actualNode.left;
+                }
+                else{
+                    previousNode = actualNode;
+                    actualNode = actualNode.right;
+                }
+            }
+            
+            
+        }
     }
     //TODO
     find(value){
@@ -109,6 +150,9 @@ class Tree{
         
     }
 }
-const exampleARRAY = [222, 4, 23, 812, 9, 4, 3, 5, 7, 9, 67, 6345, 324];
+const exampleARRAY = [3, 4, 5 ,6 ,8 ];
 let myTree = new Tree(exampleARRAY);
+myTree.prettyPrint(myTree.root);
+console.log("-------------")
+myTree.deleteItem(4);
 myTree.prettyPrint(myTree.root);
