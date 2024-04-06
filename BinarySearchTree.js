@@ -88,7 +88,6 @@ class Tree{
             
         }
     }
-    //TODO
     deleteItem(value){
         let actualNode = this.root;
         let previousNode = null;
@@ -166,9 +165,24 @@ class Tree{
             
         }
     }
-    //TODO
     find(value){
-
+        let actualNode = this.root;
+        let previousNode = null;
+        while(true){
+            if(actualNode.data == value){
+                return actualNode;
+            }
+            else{
+                if(value < actualNode.data){
+                    previousNode = actualNode;
+                    actualNode = actualNode.left;
+                }
+                else{
+                    previousNode = actualNode;
+                    actualNode = actualNode.right;
+                }
+            }
+        }
     }
     //TODO
     levelOrder(callback){
@@ -208,3 +222,4 @@ myTree.prettyPrint(myTree.root);
 console.log("-------------")
 myTree.deleteItem(5);
 myTree.prettyPrint(myTree.root);
+console.log(myTree.find(10));
