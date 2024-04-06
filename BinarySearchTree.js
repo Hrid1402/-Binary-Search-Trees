@@ -94,9 +94,61 @@ class Tree{
         let previousNode = null;
         while(true){
             if(actualNode.data == value){
+                console.log("Fonded!");
                 if(actualNode.left == null && actualNode.right == null){
+                    console.log("No childs");
                     console.log(actualNode);
                     console.log("p", previousNode.data);
+                    if(previousNode.left == actualNode){
+                        console.log("Onleft")
+                        previousNode.left = null;
+                    }
+                    else{
+                        console.log("Onright")
+                        previousNode.right = null;
+                    }
+                    break;
+                }
+                else if(actualNode.left != null && actualNode.right != null){
+                    console.log("Have two childs");
+                    if(actualNode.right.left != null){
+                        let temp = actualNode.right.left;
+                        while(temp.left != null){
+                            temp = temp.left;
+                        }
+                        console.log("temp", temp);
+                        const theData = temp.data;
+                        this.deleteItem(theData);
+                        actualNode.data = theData;
+                    }
+                    else{
+                        console.log("Data:", actualNode.right);
+                        const theData = actualNode.right;
+                        this.deleteItem(theData.data);
+                        actualNode.data = theData.data;
+                        }
+                    break;
+                }
+                else{
+                    console.log("have one child");
+                    if(actualNode.left != null){
+                        console.log("Onleft");
+                        if(previousNode.left.data == value){
+                            previousNode.left = actualNode.left;
+                        }
+                        else{
+                            previousNode.right = actualNode.left;
+                        }
+                    }
+                    else{
+                        console.log("On Right");
+                        if(previousNode.left.data == value){
+                            previousNode.left = actualNode.right;
+                        }
+                        else{
+                            previousNode.right = actualNode.right;
+                        }
+                    }
                     break;
                 }
             }
@@ -150,9 +202,9 @@ class Tree{
         
     }
 }
-const exampleARRAY = [3, 4, 5 ,6 ,8 ];
+const exampleARRAY = [3, 4, 5 ,6 ,8 ,2, 10, 24, 12, 1, 0, 7];
 let myTree = new Tree(exampleARRAY);
 myTree.prettyPrint(myTree.root);
 console.log("-------------")
-myTree.deleteItem(4);
+myTree.deleteItem(5);
 myTree.prettyPrint(myTree.root);
