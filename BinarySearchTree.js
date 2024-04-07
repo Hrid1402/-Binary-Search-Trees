@@ -185,7 +185,27 @@ class Tree{
         }
     }
     //TODO
+    //6, 2, 8, 0, 3, 7, 12, 1, 4, 10, 24
+    recursive(actualNode, finalList=[]){
+        if(actualNode != null){
+            console.log("A: ", actualNode.data);
+            finalList.push(actualNode.data);
+            if(actualNode.left != null){
+                finalList.push(this.recursive(actualNode.left, finalList));
+            }
+            if(actualNode.right != null){
+                finalList.push(this.recursive(actualNode.right, finalList));
+            }
+        }
+        
+        
+    }
     levelOrder(callback){
+        let finalList = [];
+        let actualNode = this.root;
+        let queue = [];
+        finalList = this.recursive(actualNode);
+        return finalList;
 
     }
     //TODO
@@ -223,3 +243,5 @@ console.log("-------------")
 myTree.deleteItem(5);
 myTree.prettyPrint(myTree.root);
 console.log(myTree.find(10));
+console.log("...");
+console.log(myTree.levelOrder());
