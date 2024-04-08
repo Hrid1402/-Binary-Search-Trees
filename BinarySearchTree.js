@@ -184,37 +184,75 @@ class Tree{
             }
         }
     }
-    //TODO
-    //6, 2, 8, 0, 3, 7, 12, 1, 4, 10, 24
-    recursive(actualNode, finalList=[]){
-        if(actualNode != null){
-            console.log("A: ", actualNode.data);
-            finalList.push(actualNode.data);
-            if(actualNode.left != null){
-                finalList.push(this.recursive(actualNode.left, finalList));
+    levelOrder(callback) {
+        if (this.root === null) return [];
+    
+        const queue = [this.root];
+        const result = [];
+    
+        while (queue.length > 0) {
+            const node = queue.shift();
+            if (callback) {
+                callback(node);
+            } else {
+                result.push(node.data);
             }
-            if(actualNode.right != null){
-                finalList.push(this.recursive(actualNode.right, finalList));
+        
+            if (node.left !== null) {
+                queue.push(node.left);
+            }
+        
+            if (node.right !== null) {
+                queue.push(node.right);
             }
         }
-        
-        
+    
+        return callback ? undefined : result;
     }
-    levelOrder(callback){
-        let finalList = [];
-        let actualNode = this.root;
-        let queue = [];
-        finalList = this.recursive(actualNode);
-        return finalList;
-
-    }
-    //TODO
     inOrder(callback){
+        let actualNode = this.root;
+        if(this.root === null) return [];
+        let result = [];
+        function recursive(actualNode, callback){
+            if(actualNode.left !== null){
+                recursive(actualNode.left, callback);
+            }
 
+            if(callback){
+                callback(actualNode.data);
+            }
+            else{
+                result.push(actualNode.data);
+            }
+            
+            if(actualNode.right !== null){
+                recursive(actualNode.right, callback);
+            }
+        }
+        recursive(actualNode, callback);
+        return callback ? undefined : result;
     }
-    //TODO
     preOrder(callback){
-
+        let actualNode = this.root;
+        if(this.root === null) return [];
+        let result = [];
+        function recursive(actualNode, callback){
+            if(callback){
+                callback(actualNode.data);
+            }
+            else{
+                result.push(actualNode.data);
+            }
+            
+            if(actualNode.left !== null){
+                recursive(actualNode.left, callback);
+            }   
+            if(actualNode.right !== null){
+                recursive(actualNode.right, callback);
+        }
+        }
+        recursive(actualNode, callback);
+        return callback ? undefined : result;
     }
     //TODO
     postOrder(callback){
@@ -239,9 +277,10 @@ class Tree{
 const exampleARRAY = [3, 4, 5 ,6 ,8 ,2, 10, 24, 12, 1, 0, 7];
 let myTree = new Tree(exampleARRAY);
 myTree.prettyPrint(myTree.root);
-console.log("-------------")
-myTree.deleteItem(5);
+console.log("-------------")    
 myTree.prettyPrint(myTree.root);
 console.log(myTree.find(10));
 console.log("...");
-console.log(myTree.levelOrder());
+console.log("levelOrder",myTree.levelOrder());
+console.log("preOrder", myTree.preOrder());
+console.log("In Order", myTree.inOrder());
