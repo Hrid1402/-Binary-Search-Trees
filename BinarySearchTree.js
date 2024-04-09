@@ -186,7 +186,6 @@ class Tree{
     }
     levelOrder(callback) {
         if (this.root === null) return [];
-    
         const queue = [this.root];
         const result = [];
     
@@ -254,21 +253,64 @@ class Tree{
         recursive(actualNode, callback);
         return callback ? undefined : result;
     }
-    //TODO
     postOrder(callback){
+        let actualNode = this.root;
+        if(this.root === null) return [];
+        let result = [];
+        function recursive(actualNode, callback){
+            if(actualNode.left !== null){
+                recursive(actualNode.left, callback);
+            }
 
+            if(actualNode.right !== null){
+                recursive(actualNode.right, callback);
+            }
+
+            if(callback){
+                callback(actualNode.data);
+            }
+            else{
+                result.push(actualNode.data);
+            }
+        }
+        recursive(actualNode, callback);
+        return callback ? undefined : result;
     }
-    //TODO
     height(node){
-
+        if (node === null) return 0;
+        const leftHeight = this.height(node.left);
+        const rightHeight = this.height(node.right);
+        return Math.max(leftHeight, rightHeight) + 1;
     }
-    //TODO
     depth(node){
-
+        let actualNode = this.root;
+        let height = 0;
+        while(true){
+            if(actualNode.data == node.data){
+                return height;
+            }
+            else{
+                height++;
+                if(node.data < actualNode.data){
+                    actualNode = actualNode.left;
+                }
+                else{
+                    actualNode = actualNode.right;
+                }
+            }
+        }
     }
     //TODO
     isBalanced(){
-
+        if(this.root === null) return true;
+        const leftHeight = this.height(this.root.left);
+        const rightHeight = this.height(this.root.right);
+        if(Math.abs((leftHeight - rightHeight)) <= 1){
+            return true;
+        }
+        else{
+            return false;
+        }
     }
     rebalance(){
         
@@ -284,3 +326,11 @@ console.log("...");
 console.log("levelOrder",myTree.levelOrder());
 console.log("preOrder", myTree.preOrder());
 console.log("In Order", myTree.inOrder());
+console.log("Post Order", myTree.postOrder());
+myTree.insert(100);
+myTree.insert(200);
+myTree.prettyPrint(myTree.root);
+console.log("height:", myTree.height(myTree.find(2)));
+console.log("depth:", myTree.depth(myTree.find(7)));
+console.log("Is balanced:", myTree.isBalanced());
+myTree.rebalance(200);
