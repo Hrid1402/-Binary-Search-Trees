@@ -315,23 +315,32 @@ class Tree{
         this.root = this.buildTreeNext(this.inOrder());
     }
 }
-const exampleARRAY = [3, 4, 5 ,6 ,8 ,2, 10, 24, 12, 1, 0, 7];
-let myTree = new Tree(exampleARRAY);
+//Create a binary search tree from an array of random numbers.
+const randomNumbers = [24, 45, 72, 86, 12, 45, 33, 67, 8, 92, 17, 76, 21, 88, 53];
+let myTree = new Tree(randomNumbers);
 myTree.prettyPrint(myTree.root);
-console.log("-------------")    
+//Confirm that the tree is balanced by calling isBalanced.
+console.log(myTree.isBalanced() ? "It's balanced." : "It isn't balanced.");
+//Print out all elements in level, pre, post, and in order.
+console.log("Level Order:",myTree.levelOrder());
+console.log("Pre Order:", myTree.preOrder());
+console.log("In Order:", myTree.inOrder());
+console.log("Post Order:", myTree.postOrder());
+//Unbalance the tree by adding several numbers > 100.
+myTree.insert(110);
+myTree.insert(173);
+myTree.insert(210);
+myTree.insert(114);
 myTree.prettyPrint(myTree.root);
-console.log(myTree.find(10));
-console.log("...");
-console.log("levelOrder",myTree.levelOrder());
-console.log("preOrder", myTree.preOrder());
-console.log("In Order", myTree.inOrder());
-console.log("Post Order", myTree.postOrder());
-myTree.insert(100);
-myTree.insert(200);
-myTree.prettyPrint(myTree.root);
-console.log("height:", myTree.height(myTree.find(2)));
-console.log("depth:", myTree.depth(myTree.find(7)));
-console.log("Is balanced:", myTree.isBalanced());
+//Confirm that the tree is unbalanced by calling isBalanced
+console.log(myTree.isBalanced() ? "It's balanced." : "It isn't balanced.");
+//Balance the tree by calling rebalance.
 myTree.rebalance();
 myTree.prettyPrint(myTree.root);
-console.log("Is balanced:", myTree.isBalanced());
+//Confirm that the tree is balanced by calling isBalanced.
+console.log(myTree.isBalanced() ? "It's balanced." : "It isn't balanced.");
+//Print out all elements in level, pre, post, and in order.
+console.log("Level Order:",myTree.levelOrder());
+console.log("Pre Order:", myTree.preOrder());
+console.log("In Order:", myTree.inOrder());
+console.log("Post Order:", myTree.postOrder());
