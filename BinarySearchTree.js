@@ -65,7 +65,6 @@ class Tree{
             this.prettyPrint(node.left, `${prefix}${isLeft ? "    " : "│   "}`, true);
         }
     };
-    //TODO dont work with value that already exists;
     insert(value){
         let actualNode = this.root;
         while(true){
@@ -300,7 +299,7 @@ class Tree{
             }
         }
     }
-    //TODO
+
     isBalanced(){
         if(this.root === null) return true;
         const leftHeight = this.height(this.root.left);
@@ -313,7 +312,7 @@ class Tree{
         }
     }
     rebalance(){
-        
+        this.root = this.buildTreeNext(this.inOrder());
     }
 }
 const exampleARRAY = [3, 4, 5 ,6 ,8 ,2, 10, 24, 12, 1, 0, 7];
@@ -333,4 +332,6 @@ myTree.prettyPrint(myTree.root);
 console.log("height:", myTree.height(myTree.find(2)));
 console.log("depth:", myTree.depth(myTree.find(7)));
 console.log("Is balanced:", myTree.isBalanced());
-myTree.rebalance(200);
+myTree.rebalance();
+myTree.prettyPrint(myTree.root);
+console.log("Is balanced:", myTree.isBalanced());
